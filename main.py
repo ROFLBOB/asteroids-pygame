@@ -12,7 +12,16 @@ def main():
     screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
     timer = pygame.time.Clock()
     dt = 0
+
+    #groups
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    Player.containers = (updatable, drawable)
+
     player = Player(x = constants.SCREEN_WIDTH/2, y = constants.SCREEN_HEIGHT/2)
+
+  
 
     while True:
         #get the quit button working
@@ -22,10 +31,13 @@ def main():
         
         #fill the screen blue
         screen.fill((0,0,255))
-        player.draw(screen)
 
-        #update the player
-        player.update(dt)
+        for updatable_object in updatable:
+            updatable_object.update(dt)
+        
+        for drawable_object in drawable:
+            drawable_object.draw(screen)
+
 
         #update the screen
         pygame.display.flip()
